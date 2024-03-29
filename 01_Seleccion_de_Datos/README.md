@@ -1,0 +1,1 @@
+En esta sección se profundizará en la extraccion de datos de la API de Materials Projet para nuestro modelo de predicción del bandgap y la relevancia de las características que compondrán nuestro dataset.
