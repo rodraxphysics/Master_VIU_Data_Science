@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bandgap Prediction</title>
+</head>
+<body>
+    <h2>Prediccion del Bandgap</h2>
+    <form id="myForm">
+        <label for="formula_pretty">Formula Quimica:</label>
+        <input type="text" id="formula_pretty" name="formula_pretty" required><br><br>
+        <label for="nsites">Numero de Sitios:</label>
+        <input type="number" id="nsites" name="nsites" required><br><br>
+        <label for="nelements">Numero de Elementos:</label>
+        <input type="number" id="nelements" name="nelements" required><br><br>
+        <label for="volume">Volumen:</label>
+        <input type="number" step="any" id="volume" name="volume" required><br><br>
+        <label for="density">Densidad:</label>
+        <input type="number" step="any" id="density" name="density" required><br><br>
+        <label for="density_atomic">Densidad Atomica:</label>
+        <input type="number" step="any" id="density_atomic" name="density_atomic" required><br><br>
+        <label for="crystal_symmetry">Simetria Cristalina:</label>
+        <input type="text" id="crystal_symmetry" name="crystal_symmetry" required><br><br>
+        <label for="symmetry_number">Numero de Simetria:</label>
+        <input type="number" id="symmetry_number" name="symmetry_number" required><br><br>
+        <label for="sides_abc">Lados ABC:</label>
+        <input type="number" step="any" id="sides_abc" name="sides_abc" required><br><br>
+        <label for="angles_abc">Angulos ABC:</label>
+        <input type="number" step="any" id="angles_abc" name="angles_abc" required><br><br>
+        <label for="uncorrected_energy_per_atom">Energia no corregida por atomo:</label>
+        <input type="number" step="any" id="uncorrected_energy_per_atom" name="uncorrected_energy_per_atom" required><br><br>
+        <label for="energy_per_atom">Energia por atomo:</label>
+        <input type="number" step="any" id="energy_per_atom" name="energy_per_atom" required><br><br>
+        <label for="formation_energy_per_atom">Energia de formacion por atomo:</label>
+        <input type="number" step="any" id="formation_energy_per_atom" name="formation_energy_per_atom" required><br><br>
+        <label for="energy_above_hull">Ehull:</label>
+        <input type="number" step="any" id="energy_above_hull" name="energy_above_hull" required><br><br>
+        <label for="is_stable">Es Estable:</label>
+        <input type="checkbox" id="is_stable" name="is_stable"><br><br>
+        <label for="efermi">Efermi:</label>
+        <input type="number" step="any" id="efermi" name="efermi" required><br><br>
+        <label for="is_magnetic">Es Magnetico:</label>
+        <input type="checkbox" id="is_magnetic" name="is_magnetic"><br><br>
+        <label for="total_magnetization">Magnetizacion Total:</label>
+        <input type="number" step="any" id="total_magnetization" name="total_magnetization" required><br><br>
+        <label for="num_magnetic_sites">Numero de Sitios Magneticos:</label>
+        <input type="number" step="any" id="num_magnetic_sites" name="num_magnetic_sites" required><br><br>
+        <label for="email">Correo Electronico:</label>
+        <input type="text" step="any" id="email" name="email" required><br><br>
+
+        <button type="button" onclick="postData()">Enviar</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        function postData() {
+            var formData = {
+                "formula_pretty": document.getElementById("formula_pretty").value,
+                "nsites": document.getElementById("nsites").value,
+                "nelements": document.getElementById("nelements").value,
+                "volume": document.getElementById("volume").value,
+                "density": document.getElementById("density").value,
+                "density_atomic": document.getElementById("density_atomic").value,
+                "crystal_symmetry": document.getElementById("crystal_symmetry").value,
+                "symmetry_number": document.getElementById("symmetry_number").value,
+                "sides_abc": document.getElementById("sides_abc").value,
+                "angles_abc": document.getElementById("angles_abc").value,
+                "uncorrected_energy_per_atom": document.getElementById("uncorrected_energy_per_atom").value,
+                "energy_per_atom": document.getElementById("energy_per_atom").value,
+                "formation_energy_per_atom": document.getElementById("formation_energy_per_atom").value,
+                "energy_above_hull": document.getElementById("energy_above_hull").value,
+                "is_stable": document.getElementById("is_stable").checked,
+                "efermi": document.getElementById("efermi").value,
+                "is_magnetic": document.getElementById("is_magnetic").checked,
+                "total_magnetization": document.getElementById("total_magnetization").value,
+                "num_magnetic_sites": document.getElementById("num_magnetic_sites").value,
+                "email": document.getElementById("email").value
+            };
+            var data = JSON.stringify(formData);
+            sendPostRequest(data); 
+        }
+
+        function sendPostRequest(data) {
+            var xhr = new XMLHttpRequest();
+            var url = 'https://djw1pe9d.execute-api.us-east-1.amazonaws.com/test2/lambda-4';
+
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            
+            xhr.send(data);
+
+            document.getElementById("response").innerHTML = "En unos minutos recibira la prediccion del bandgap en su correo electronico: " + document.getElementById("email").value + ".";
+
+        }
+    </script>
+</body>
+</html>
